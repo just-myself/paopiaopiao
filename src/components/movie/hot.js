@@ -14,32 +14,44 @@ class Hot extends React.Component{
     componentDidMount () {  
             this.props.hot()
     }
-    onLoading () {
-
-        // fetch('http://localhost:8084/movie/hot/?city=bj')
-        // .then(res=> res.json())
-        // .then(res=>{
-        //     this.setState({
-        //          city:res.city,
-        //          data:res.data,
-        //          errno:res.errno,
-        //          msg:res.msg
-        //     })
-        // }) 
-
+    componentWillReceiveProps(nextProps){
+          if(nextProps !== this.props){
+              console.log(nextProps)
+              this.setState({data:nextProps.hots})
+          }
     }
 render (){
-    return (<div>
-        <h1>电影1</h1>
-        {this.state.data && this.state.data.data && this.state.data.data.returnValue.map(item => {
-           return( <div>
-                <span>{item.showName}</span>
-                <span>{item.highlight}</span>   
+    //  const {data={}} = this.props.hots.data
+    //  console.log(data)
+    const {data} = this.state.data
+    return (<div style={{marginLeft:'100px'}}>
+
+        {    data && (data.data && (data.data.data.returnValue
+    .map(item => {
+            console.log(item)
+           return( <div key={item.id} style={{content:'',display:'block',clear:'both'}}>
+               <video style={{float:'left'}}
+               id='video'
+               poster={`${item.poster}`}
+               preload='auto'
+               webkit-playsinline='true'
+               x-webkit-airplay='allow'
+               width='200'
+               height='180'
+               src={item.preview.length>0 ? `${item.preview[0].iphoneUrl}`:''}
+               >
+
+               </video>
+               <div style={{float:'left'}}>
+                <p>{item.showName}</p>
+                <span>{item.highlight}</span> 
+               </div>
+  
             </div>
            )
-        })
+        })))
         }
     </div>)
 }
 } 
-export default connect((state)=> {return state},{hot})(Hot)
+export default connect((state)=>( {hots:state.hot}),{hot})(Hot)

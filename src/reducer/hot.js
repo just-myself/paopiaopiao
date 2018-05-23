@@ -1,15 +1,14 @@
 import * as type from '../constants/actionTypes'
-import createReducer from './creator'
 
- const hot = createReducer({},{
-        [type.HOT+type.REQUEST](state,action){
-         return {...state,loading:true}
-        },
-        [type.HOT+type.SUCCESS](state,action){
-         return {...state,loading:false}
-        },
-        [type.HOT+type.FAILURE](state,action){
-        return {...state,loading:false}
-        }
- })
-export default hot
+export default  function hot (state={},action){
+    switch(action.type){
+        case type.HOT+type.REQUEST :
+        return Object.assign({},...state,{loading:true})
+        case type.HOT+type.SUCCESS:
+        return Object.assign({},...state,{loading:false,data:action.response})
+        case type.HOT+type.FAILURE:
+        return Object.assign({},...state,{loading:false})
+        default:
+        return state
+    }
+}

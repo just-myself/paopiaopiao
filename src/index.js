@@ -10,8 +10,11 @@ import {applyMiddleware, compose, createStore} from 'redux'
 import thunk from 'redux-thunk'
 import callAPIMiddleware from './middle/api'
 import reducers from './reducer/index'
-const composeEnhancers = compose
-const store = createStore(reducers, composeEnhancers(applyMiddleware(thunk, callAPIMiddleware)))
+// const composeEnhancers = compose
+const store = createStore(reducers, compose(applyMiddleware(thunk, callAPIMiddleware)))
+store.subscribe(()=>{
+    console.log(store.getState())
+})
 ReactDOM.render(
 <Provider store={store}>
  <BrowserRouter>

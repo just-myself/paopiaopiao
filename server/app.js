@@ -24,7 +24,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors({
-  origin:['http://localhost:8084','http://localhost:3003'] 
+  origin:['http://localhost:8084','http://localhost:3003','http://localhost:3000','http://localhost:8084'] 
 }))
 app.use(express.static(path.join(__dirname, 'public')));
 
